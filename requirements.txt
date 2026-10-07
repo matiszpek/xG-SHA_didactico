@@ -12,5 +12,9 @@ pytest>=8.0
 # Herramientas
 yt-dlp>=2026.8.0          # versiones anteriores fallan con HTTP 403 en los streams del club (lección del repo anterior)
 
-# A partir de U3 (StatsBomb) y U6 (deep learning) se agregan:
-# pandas, scikit-learn (solo para comparar), torch, torchvision, ultralytics
+# U2–U3: para comparar contra lo propio (no para resolver los TPs) y manejar tablas
+scikit-image>=0.22
+pandas>=2.0
+scikit-learn>=1.4
+
+# A partir de U6 (deep learning) se agregan: torch, torchvision, ultralytics

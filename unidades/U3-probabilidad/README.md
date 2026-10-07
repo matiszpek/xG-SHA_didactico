@@ -1,53 +1,52 @@
 # U3 — Probabilidad + primer modelo (xG)
 
-**Sesiones:** 5 · **TP:** TP3 → `mv/prob.py`, `mv/xg.py` · **Estado:** 📋 ficha
+**Sesiones:** 5 (~10 h, más el TP) · **TP:** TP3 → `mv/prob.py`, `mv/xg.py`
 
-## Por qué
-El diagnóstico mostró que esta es el área más floja (casi desde cero) y es la que más se usa por debajo de todo lo demás:
-- **evaluar detectores** es probabilidad condicional;
-- el **filtro de Kalman** del tracking es Bayes + gaussianas;
-- **RANSAC** se diseña con probabilidad;
-- **entrenar cualquier modelo** es máxima verosimilitud.
+## Por qué esta unidad
 
-Y el primer modelo que vamos a entrenar es el que da nombre al proyecto: **el xG**.
+Es el área más floja del diagnóstico (casi desde cero) y la que más se usa por debajo de todo lo demás:
+- **evaluar detectores** es probabilidad condicional (U7);
+- el **filtro de Kalman** es Bayes + gaussianas (U8);
+- **RANSAC** se diseña con probabilidad (U4);
+- **entrenar cualquier modelo** es máxima verosimilitud (U6).
 
-Lo que ya traés bien: sumar los xG de los tiros da los goles esperados. Es la linealidad de la esperanza, y la usaste sin saberlo.
+Y el primer modelo que vas a entrenar desde cero es el que da nombre al proyecto: **el xG**.
+
+Lo que ya traés: sumar los xG de los tiros da los goles esperados. Es la linealidad de la esperanza, y la usaste sin saberlo.
 
 ## Objetivos
-1. Probabilidad condicional, independencia, regla del producto, complemento ("al menos uno"), **Bayes**.
-2. Variables aleatorias discretas y continuas, densidad, esperanza, varianza, **linealidad de la esperanza**.
-3. Bernoulli, binomial, normal. **Gaussiana multivariada** y matriz de covarianza (con autovectores de U1).
-4. **Máxima verosimilitud**: por qué *cross-entropy* es la log-verosimilitud negativa de una Bernoulli.
-5. Regresión logística como modelo probabilístico, entrenada por **descenso por gradiente** (el gradiente se deriva a mano).
-6. Evaluación: *log loss*, AUC, **calibración**. *Data leakage* y por qué separar por partido.
 
-## Contenidos y recursos por sesión
+Al terminar U3 puedo, sin buscar:
+1. Calcular "al menos uno" por complemento, distinguir independientes de excluyentes y aplicar **Bayes** con la tasa base.
+2. Explicar densidad contra probabilidad, esperanza (y su **linealidad**), varianza, y calcular la distribución exacta de goles (como **convolución**) y verificarla con Monte Carlo.
+3. Interpretar una **gaussiana multivariada**: la matriz de covarianza como elipse (autovectores de U1) y la distancia de Mahalanobis.
+4. Derivar la **regresión logística** desde la máxima verosimilitud: *cross-entropy* y su gradiente **a mano**.
+5. Entrenarla con descenso por gradiente, estandarizando bien.
+6. Evaluarla honestamente: línea de base, AUC, **calibración**, split **por partido**, y cuántos datos hacen falta para creerse un número.
 
-| Sesión | Contenido | Recursos |
-|---|---|---|
-| 1 | Probabilidad básica, condicional, independencia, complemento, Bayes (con el detector de pelota del diagnóstico) | Seeing Theory, caps. 1–2 · 3Blue1Brown: *Bayes theorem, the geometry of changing beliefs* |
-| 2 | Variables aleatorias, esperanza, varianza, linealidad. Bernoulli y binomial. Simulación con NumPy | Seeing Theory, cap. 3 |
-| 3 | Normal, normal multivariada, covarianza, elipses de confianza (autovectores de la covarianza) | StatQuest: *The Normal Distribution* · repaso del apunte 05 de U1 |
-| 4 | Máxima verosimilitud. Regresión logística. *Cross-entropy*. Descenso por gradiente | StatQuest: *Maximum Likelihood*, serie *Logistic Regression* · *xG Philosophy* (Tippett) |
-| 5 | Evaluación: *log loss*, ROC/AUC, calibración, splits por partido. Aplicación a tiros de Hebraica | StatsBomb Open Data |
+## Plan
 
-## TP3 (borrador)
-- `mv/prob.py`: simulaciones de Monte Carlo para verificar resultados analíticos (por ejemplo, la probabilidad de 0 goles dados los xG), y la densidad gaussiana multivariada.
-- `mv/xg.py`:
-  - *features* geométricas del tiro (distancia y **ángulo** al arco);
-  - `sigmoide`;
-  - `log_verosimilitud`;
-  - `gradiente`, **derivado a mano**;
-  - `entrenar`, con descenso por gradiente;
-  - `predecir`;
-  - `log_loss`, `auc`, `curva_calibracion`.
+| Sesión | Videos y lectura | Apunte | Práctica |
+|---|---|---|---|
+| **1** | Seeing Theory, caps. 1–2 · 3Blue1Brown: *Bayes theorem, the geometry of changing beliefs* | [01 · Probabilidad y Bayes](apuntes/01-probabilidad-basica.md) | Guía A + TP3 A (`prob_al_menos_uno`, `bayes`) |
+| **2** | Seeing Theory, cap. 3 | [02 · Variables aleatorias](apuntes/02-variables-aleatorias.md) | Guía B + TP3 A (`distribucion_goles`, `simular_goles`) |
+| **3** | StatQuest: *The Normal Distribution* · repaso de U1, apunte 05 | [03 · La normal](apuntes/03-normal-multivariada.md) | Guía C + TP3 A (el resto de `prob.py`) |
+| **4** | StatQuest: *Maximum Likelihood*, serie *Logistic Regression* · *xG Philosophy* | [04 · MLE y logística](apuntes/04-maxima-verosimilitud-logistica.md) | Guía D + TP3 B (el modelo) |
+| **5** | — | [05 · Evaluación](apuntes/05-evaluacion.md) | Guía E + TP3 B (evaluación) + informe |
 
-Notebook:
-- datos de StatsBomb;
-- split **por partido**;
-- comparar contra `sklearn.LogisticRegression` (que tiene que dar casi lo mismo) y contra el xG de StatsBomb;
-- aplicar el modelo a ~20 tiros de Hebraica marcados a mano sobre un croquis de la cancha;
-- discutir si un modelo entrenado con fútbol profesional sirve para Sub-21 amateur.
+## Datos
 
-## Conexión con el producto
-El xG es una de las métricas del producto. Además, *log loss*, calibración y split por partido son la forma correcta de evaluar **cualquier** modelo del producto.
+```bash
+python herramientas/bajar_tiros_statsbomb.py       # ~260 partidos de selecciones, ~6400 tiros, ~1 minuto
+```
+
+Genera `datos/statsbomb/tiros.csv`. Los datos son [StatsBomb Open Data](https://github.com/statsbomb/open-data): uso **no comercial** y con atribución.
+
+Además vas a marcar a mano **tiros de Hebraica** en `tp3/tiros_hebraica.csv` (instrucciones en el enunciado).
+
+Dependencias nuevas: `pandas` y `scikit-learn` (sklearn solo para **comparar**). Ya están en `requirements.txt`.
+
+## Guía y TP
+
+- [Guía de ejercicios](guia.md): bloques A–E con respuestas.
+- [TP3 — xG desde cero](tp3/enunciado.md).
