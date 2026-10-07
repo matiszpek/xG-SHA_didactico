@@ -1,50 +1,43 @@
 # U2 — La imagen como señal
 
-**Sesiones:** 4 · **TP:** TP2 → `mv/filtros.py` · **Estado:** 📋 ficha (el material completo se escribe al arrancar U1)
+**Sesiones:** 4 (~8 h, más el TP) · **TP:** TP2 → `mv/filtros.py`
 
-## Por qué
-Hasta acá una imagen fue un array. En esta unidad pasa a ser una **señal**: algo que varía en el espacio, que tiene ruido, bordes, texturas y frecuencias. La operación central es la **convolución**: casi todo lo clásico (desenfocar, detectar bordes) y casi todo lo moderno (las CNN) es convolucionar.
+## Por qué esta unidad
 
-Del diagnóstico: los bordes son donde la derivada es **grande**, la derivada amplifica el ruido, por eso se desenfoca antes, y el tono de HSV es estable frente al sol y la sombra.
+Hasta acá una imagen fue un array. En esta unidad pasa a ser una **señal**: algo que varía en el espacio, con ruido, bordes y texturas. La operación central es la **convolución**: casi todo lo clásico (desenfocar, derivar, detectar bordes) y casi todo lo moderno (las CNN de U6) es convolucionar.
+
+Del diagnóstico salen tres cosas que esta unidad corrige con fundamento:
+- los bordes están donde la derivada es **grande**;
+- **derivar amplifica el ruido**, y por eso se desenfoca antes;
+- **el tono de HSV resiste la sombra**.
+
+También acá se aprende el **cálculo multivariable** que falta para U3 y U6.
 
 ## Objetivos
-1. Implementar la convolución 2D desde cero, vectorizada, y explicar la diferencia con la correlación.
-2. Explicar el filtro gaussiano y por qué es separable.
-3. **Cálculo multivariable mínimo:** derivadas parciales, gradiente y regla de la cadena en varias variables.
-4. Calcular el gradiente de una imagen (Sobel), su magnitud y su orientación.
-5. Implementar Canny paso a paso: suavizado, gradiente, supresión de no máximos e histéresis.
-6. Usar espacios de color (HSV, Lab) para segmentar el pasto.
-7. Entender la idea de la transformada de Hough para detectar rectas.
 
-## Contenidos y recursos por sesión
+Al terminar U2 puedo, sin buscar:
+1. Explicar por qué HSV separa "qué color" de "cuánta luz", y cuándo el tono no sirve.
+2. Implementar la convolución 2D vectorizada, explicar la diferencia con la correlación y elegir el modo de borde.
+3. Explicar el gaussiano (σ, radio 3σ, normalización) y por qué es **separable** (rango 1).
+4. Calcular derivadas parciales, gradientes y la regla de la cadena en varias variables.
+5. Calcular e interpretar el gradiente de una imagen (Sobel): magnitud, orientación y signos con la y hacia abajo.
+6. Implementar Canny paso a paso, y explicar qué criterio ataca cada paso.
+7. Detectar rectas con Hough, y refinarlas con los cuadrados mínimos totales del TP1.
 
-| Sesión | Contenido | Recursos |
-|---|---|---|
-| 1 | Formación de imagen (lo mínimo), color (RGB, HSV, Lab), histogramas, operadores puntuales (umbral, ecualización) | First Principles of CV: *Image Formation*, *Image Sensing* · Stachniss, clase 4 |
-| 2 | Convolución: definición, *padding*, separabilidad. Filtros de promedio, gaussiano y mediana (no lineal). Ruido | First Principles of CV: *Image Processing I* · 3Blue1Brown: *But what is a convolution?* · Szeliski 3.2–3.3 |
-| 3 | Cálculo multivariable: parciales, gradiente, regla de la cadena. Gradiente de imagen, Sobel, derivada de una gaussiana | Khan Academy, *Multivariable calculus* (gradiente) · First Principles of CV: *Edge Detection* · Stachniss, clase 12 |
-| 4 | Canny completo. Hough para rectas. Aplicación: líneas de la cancha | First Principles of CV: *Boundary Detection* · Szeliski 7.2, 7.4 |
+## Plan
 
-## TP2 (borrador)
-`mv/filtros.py`:
-- `convolucionar` (2D, vectorizada, con *padding*)
-- `kernel_gaussiano`
-- `filtrar_separable`
-- `sobel`
-- `magnitud_orientacion`
-- `supresion_no_maximos`
-- `histeresis`
-- `canny`
-- `rgb_a_hsv`
-- `mascara_pasto_hsv`
-- `hough_rectas`
+| Sesión | Videos y lectura | Apunte | Práctica |
+|---|---|---|---|
+| **1** | First Principles of CV: *Image Formation*, *Image Sensing* · Stachniss, clase 4 | [01 · Color e histogramas](apuntes/01-color-histogramas.md) | Guía A + **TP2 S1** |
+| **2** | First Principles of CV: *Image Processing I* · 3Blue1Brown: *But what is a convolution?* · Szeliski 3.2–3.3 | [02 · Convolución](apuntes/02-convolucion.md) | Guía B + **TP2 S2** |
+| **3** | Khan Academy: *partial derivatives*, *gradient* · First Principles of CV: *Edge Detection* · Stachniss, clase 12 | [03 · Gradiente y bordes](apuntes/03-gradiente-bordes.md) | Guía C + **TP2 S3** |
+| **4** | First Principles of CV: *Boundary Detection* · Szeliski 7.2.1 y 7.4.2 | [04 · Canny y Hough](apuntes/04-canny-hough.md) | Guía D + **TP2 S4** |
 
-Notebook:
-- tu convolución contra `scipy.signal.convolve2d` / `cv2.filter2D`;
-- el efecto del sigma;
-- el ruido de compresión y los bordes falsos;
-- la máscara de pasto RGB (TP0) contra HSV, con sol y sombra;
-- detectar las líneas de la cancha en un frame real y ajustarlas con lo de TP1.
+En esta unidad el TP va **en paralelo** con las sesiones: cada sesión implementa su parte de `mv/filtros.py` (los tests están separados por sesión: `-k s1`, `-k s2`, etc.).
 
-## Conexión con el producto
-La segmentación del pasto (qué es cancha y qué no) y la detección de líneas (asistente de calibración) son piezas directas. Además, entender la convolución es requisito para entender las CNN de U6.
+## Guía y TP
+
+- [Guía de ejercicios](guia.md): bloques A–D con respuestas.
+- [TP2 — Bordes y líneas de la cancha](tp2/enunciado.md).
+
+**Requisito:** TP1 aprobado. El TP2 usa `mv.geometria` (cuadrados mínimos totales, intersecciones) para refinar las rectas de Hough.
