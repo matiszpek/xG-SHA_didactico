@@ -60,9 +60,9 @@ Cada TP implementa funciones reales en `mv/`: convolución, homografía, filtro 
 |---|---|---|---|
 | U0 | Herramientas: NumPy para imágenes | ✅ completo | ⬜ sin empezar |
 | U1 | Álgebra lineal geométrica | ✅ completo | ⬜ |
-| U2 | La imagen como señal | 📋 ficha | ⬜ |
-| U3 | Probabilidad + primer modelo (xG) | 📋 ficha | ⬜ |
-| U4 | Geometría de la cámara | 📋 ficha | ⬜ |
+| U2 | La imagen como señal | ✅ completo | ⬜ |
+| U3 | Probabilidad + primer modelo (xG) | ✅ completo | ⬜ |
+| U4 | Geometría de la cámara | ✅ completo | ⬜ |
 | U5 | Features y movimiento | 📋 ficha | ⬜ |
 | U6 | Redes neuronales desde cero | 📋 ficha | ⬜ |
 | U7 | Detección | 📋 ficha | ⬜ |
