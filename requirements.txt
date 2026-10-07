@@ -1,0 +1,16 @@
+# Núcleo de la materia
+numpy>=1.26
+matplotlib>=3.8
+opencv-python>=4.9        # solo para E/S de imágenes y video, y para comparar contra lo propio
+scipy>=1.11               # para comparar resultados (no para resolver los TPs)
+
+# Notebooks y tests
+jupyterlab>=4.0
+ipykernel>=6.0
+pytest>=8.0
+
+# Herramientas
+yt-dlp>=2026.8.0          # versiones anteriores fallan con HTTP 403 en los streams del club (lección del repo anterior)
+
+# A partir de U3 (StatsBomb) y U6 (deep learning) se agregan:
+# pandas, scikit-learn (solo para comparar), torch, torchvision, ultralytics

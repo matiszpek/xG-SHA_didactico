@@ -1,0 +1,18 @@
+# Datos (pesan; se regeneran con herramientas/)
+datos/*
+!datos/README.md
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Sistema
+.DS_Store
+Thumbs.db
